@@ -19,6 +19,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1, 5));
+      .then(heroes => this.findTop(heroes));
+  }
+  
+  // find the top heroes
+  findTop(allHeroes: Hero[]): void{
+    // sort heroes
+    allHeroes.sort((n1, n2) => {
+      if (n1.powerLevel > n2.powerLevel) {
+        return -1;
+      }
+
+      if (n1.powerLevel < n2.powerLevel) {
+          return 1;
+      }
+  
+      return 0;
+    });
+    this.heroes = allHeroes.slice(1, 5);
   }
 }
